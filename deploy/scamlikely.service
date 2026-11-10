@@ -1,0 +1,22 @@
+[Unit]
+Description=scamlikely - Discord impersonation watch
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=scamlikely
+Group=scamlikely
+WorkingDirectory=/opt/scamlikely
+EnvironmentFile=/etc/scamlikely/env
+ExecStart=/opt/scamlikely/.venv/bin/python -m scamlikely.bot
+Restart=on-failure
+RestartSec=10
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/scamlikely
+
+[Install]
+WantedBy=multi-user.target
