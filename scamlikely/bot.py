@@ -567,6 +567,16 @@ class ImpersonationBot(discord.Client):
         await self.tree.sync()
         LOG.info("setup complete: %d guild(s), slash commands synced", len(self.guilds))
 
+    async def on_guild_join(self, guild: discord.Guild) -> None:
+        # Global commands can take up to an hour to propagate. Mirroring them
+        # into the guild on join makes /protect usable immediately.
+        self.tree.copy_global_to(guild=guild)
+        try:
+            await self.tree.sync(guild=guild)
+        except discord.HTTPException as exc:
+            LOG.warning("guild command sync failed for %s: %s", guild.id, exc)
+        LOG.info("joined guild %s (%s)", guild.name, guild.id)
+
     async def on_ready(self) -> None:
         LOG.info("logged in as %s (%s)", self.user, getattr(self.user, "id", "?"))
         for guild in self.guilds:
