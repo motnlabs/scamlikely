@@ -199,4 +199,4 @@ distance, plus two negative controls.
 
 ## Licence
 
-MIT. See `LICENSE`. Copyright (c) 2026 TJ Oludemi.
+MIT. See `LICENSE`. Copyright (c) 2026 Motion Labs LTD (motnlabs).
